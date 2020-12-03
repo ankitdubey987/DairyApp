@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+    {{title}}
+{% endblock title %}
+    
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <form action="" method="post" class="form-group">
+            <h4>Create Memeory</h4>
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Create Memeory" class="btn btn-outline-primary">
+        </form>
+    </div>
+{% endblock content %}
+    

@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        {% if request.user.is_authenticated %}
+            <a class="navbar-brand" href="{% url 'memory:home' %}">{{request.user.username|capfirst}} Todos</a>
+        {% else %}
+            <a href="{% url 'memory:home' %}" class="navbar-brand">Dear Dairy</a>
+        {% endif %}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'memory:create' %}">New Memory</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            {% if request.user.is_authenticated %}
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle btn-primary rounded" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="#" alt="{{profile.first_name}}" class="rounded-circle" height="30px" width="30px">
+              </a>
+              <div class="dropdown-menu pull-right" aria-labelledby="navbarDropdown">
+                <a href="{% url 'memory:home' %}" class="dropdown-item">{{user.username|capfirst}}</a>
+                <a class="dropdown-item" href="#">Profile</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item"  href="{% url 'profile:logout' %}">Logout</a>
+              </div>
+            </div>
+            {% else %}
+            <a class="btn btn-outline-success my-2 my-sm-0 m-1 " href="{% url 'profile:login' %}">Login</a>
+            <a class="btn btn-outline-primary my-2 my-sm-0 m-1 " href="{% url 'profile:signup' %}">SignUp</a>
+            {% endif %}
+          </form>
+        </div>
+      </nav>
+</div>
