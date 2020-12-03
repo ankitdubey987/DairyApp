@@ -1,9 +1,10 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect,get_object_or_404,get_list_or_404
 from django.urls import reverse_lazy
 from .models import Memory,MemoryForm
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.contrib.auth.models import User
 # Create your views here.
 
 class MemoryListView(LoginRequiredMixin,generic.ListView):
@@ -16,6 +17,14 @@ class MemoryListView(LoginRequiredMixin,generic.ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = self.title
         return context
+    
+    def get_queryset(self):
+        current_user = get_object_or_404(User,pk=self.request.user.id)
+        query = super().get_queryset()
+        memories = query.filter(user_id=current_user)
+        return memories
+
+    
     
 class MemoryCreateView(LoginRequiredMixin,generic.CreateView):
     template_name = 'memory/memory_create.html'
